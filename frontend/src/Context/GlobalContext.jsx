@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import useTasks from "../Components/useTasks";
 const GlobalContext = createContext()
 
 export const GlobalProvider = ({ children }) => {
@@ -11,9 +12,8 @@ export const GlobalProvider = ({ children }) => {
             .then((data) => setTasks(data))
     }
 
-
     return (
-        <GlobalContext.Provider value={{ tasks, fetchTasks }}>
+        <GlobalContext.Provider value={{ apiUrl, tasks, fetchTasks, useTasks }}>
             {children}
         </GlobalContext.Provider>
     )
