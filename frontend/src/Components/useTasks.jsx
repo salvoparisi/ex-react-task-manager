@@ -1,7 +1,8 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import GlobalContext from "../Context/GlobalContext";
 function useTasks() {
-    const { tasks, setTasks, apiUrl } = useContext(GlobalContext);
+    const { apiUrl } = useContext(GlobalContext);
+    const [tasks, setTasks] = useState([])
     function getTasks() {
         fetch(`${apiUrl}/tasks`)
             .then((res) => res.json())
