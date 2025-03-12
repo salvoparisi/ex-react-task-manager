@@ -7,6 +7,7 @@ function useTasks() {
         fetch(`${apiUrl}/tasks`)
             .then((res) => res.json())
             .then((data) => setTasks(data))
+            .catch((error) => console.error("Errore nel fetch:", error))
     }
     function addTask() {
 
