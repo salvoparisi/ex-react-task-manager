@@ -9,9 +9,9 @@ function TaskList() {
         fetchTasks();
     }, []);
 
-    const ListMemo = memo(({ title, status, createdAt }) => {
+    const ListMemo = ({ title, status, createdAt }) => {
         return <TaskRow title={title} status={status} createdAt={createdAt} />
-    });
+    };
 
     return (
         <table border="1" width="50%">
