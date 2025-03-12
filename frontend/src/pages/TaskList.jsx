@@ -1,7 +1,8 @@
-import { useEffect } from "react"
+import { useEffect, useContext } from "react"
+import ContextApi from "../Context/ContextApi";
 
 function TaskList() {
-    const apiUrl = import.meta.env.VITE_API_URL
+    const apiUrl = useContext(ContextApi)
     useEffect(() => {
         console.log(apiUrl);
 
