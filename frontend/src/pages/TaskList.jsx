@@ -3,10 +3,11 @@ import GlobalContext from "../Context/GlobalContext";
 import TaskRow from "../Components/TaskRow";
 
 function TaskList() {
-    const { tasks, fetchTasks } = useContext(GlobalContext);
+    const { useTasks } = useContext(GlobalContext);
+    const { tasks, getTasks } = useTasks()
 
     useEffect(() => {
-        fetchTasks();
+        getTasks();
     }, []);
 
     const ListMemo = ({ title, status, createdAt }) => {
