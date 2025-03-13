@@ -9,7 +9,7 @@ const TaskRow = memo(({ title, status, createdAt, id }) => {
                 color: status === "Doing" ? "black" : "white"
             }}>
             <td>
-                <Link style={{ color: status === "Doing" ? "black" : "white" }} to={`${id}`}>{title}</Link>
+                <Link style={{ color: status === "Doing" ? "black" : "white" }} to={`/task/${id}`}>{title}</Link>
             </td>
             <td>{status}</td>
             <td>{new Date(createdAt).toLocaleDateString()}</td>

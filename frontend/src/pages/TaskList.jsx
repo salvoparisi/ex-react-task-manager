@@ -12,6 +12,7 @@ function TaskList() {
     }, []);
 
     return (
+
         <table border="1" width="50%">
             <thead>
                 <tr>
@@ -26,6 +27,7 @@ function TaskList() {
                 ))}
             </tbody>
         </table>
+
     );
 }
 

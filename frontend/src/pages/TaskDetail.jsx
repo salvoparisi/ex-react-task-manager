@@ -1,6 +1,6 @@
-import { useParams, Link } from "react-router-dom"
+import { useParams } from "react-router-dom"
 function TaskDetail() {
-    const id = useParams(id)
+    const { id } = useParams()
     return (
         <div>{id}</div>
     )
