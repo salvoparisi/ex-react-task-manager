@@ -1,4 +1,4 @@
-import { useEffect, useContext, memo } from "react";
+import { useEffect, useContext } from "react";
 import GlobalContext from "../Context/GlobalContext";
 import TaskRow from "../Components/TaskRow";
 

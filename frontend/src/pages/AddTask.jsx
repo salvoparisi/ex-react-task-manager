@@ -1,6 +1,8 @@
 import { useState, useRef, useContext } from "react"
 import GlobalContext from "../Context/GlobalContext"
 function AddTask() {
+    const { useTasks } = useContext(GlobalContext)
+    const { addTask } = useTasks()
     const [title, setTitle] = useState("")
     const description = useRef()
     const status = useRef()
@@ -16,9 +18,20 @@ function AddTask() {
         } else if (!status.current.value) {
             alert("Inserire uno stato")
         } else {
-            console.log(title);
-            console.log(description.current.value);
-            console.log(status.current.value);
+            try {
+                addTask({
+                    title: title,
+                    description: description.current.value,
+                    status: status.current.value
+                })
+                setTitle("");
+                description.current.value = "";
+                status.current.value = "";
+                alert("Task Inviata con Successo!")
+            }
+            catch (err) {
+                console.log(err);
+            }
         }
     }
     function validateTitle() {
@@ -30,7 +43,7 @@ function AddTask() {
         <div className="d-flex">
             <div>
                 <div>Titolo:</div>
-                <input type="text" onChange={(e) => setTitle(e.target.value)} style={{ background: validateTitle() ? "red" : title.length < 1 ? "red" : "green" }} />
+                <input value={title} type="text" onChange={(e) => setTitle(e.target.value)} style={{ background: validateTitle() ? "red" : title.length < 1 ? "red" : "green" }} />
             </div>
             <div>
                 <div>Descrizione:</div>

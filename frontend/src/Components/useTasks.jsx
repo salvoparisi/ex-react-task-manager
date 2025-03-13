@@ -9,8 +9,17 @@ function useTasks() {
             .then((data) => setTasks(data))
             .catch((error) => console.error("Errore nel fetch:", error))
     }
-    function addTask() {
-
+    function addTask(task) {
+        fetch(`${apiUrl}/tasks`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(task)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
     }
     function removeTask() {
 
