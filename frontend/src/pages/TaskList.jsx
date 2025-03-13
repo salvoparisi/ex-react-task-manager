@@ -10,10 +10,6 @@ function TaskList() {
         getTasks();
     }, []);
 
-    const ListMemo = ({ title, status, createdAt }) => {
-        return <TaskRow title={title} status={status} createdAt={createdAt} />
-    };
-
     return (
         <table border="1" width="50%">
             <thead>
@@ -25,7 +21,7 @@ function TaskList() {
             </thead>
             <tbody>
                 {tasks.map((task) => (
-                    <ListMemo key={task.id} {...task} />
+                    <TaskRow key={task.id} {...task} />
                 ))}
             </tbody>
         </table>
