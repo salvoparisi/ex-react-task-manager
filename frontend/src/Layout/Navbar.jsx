@@ -6,7 +6,7 @@ function Navbar() {
                 <Link to="/addtask">Add Task</Link>
             </div>
             <div className='tasklist'>
-                <Link to="/tasklist">Task List</Link>
+                <Link to="/task">Task List</Link>
             </div>
 
         </div>
