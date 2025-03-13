@@ -50,7 +50,7 @@ function AddTask() {
                 <textarea name="description" id="" ref={description}></textarea>
             </div>
 
-            <select name="status" id="" ref={status}>
+            <select name="status" id="" ref={status} defaultValue="">
                 <option value="" disabled selected>Seleziona uno stato</option>
                 <option value="To do"> To do</option>
                 <option value="Doing">Doing</option>
