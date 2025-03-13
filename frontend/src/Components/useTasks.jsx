@@ -3,12 +3,14 @@ import GlobalContext from "../Context/GlobalContext";
 function useTasks() {
     const { apiUrl } = useContext(GlobalContext);
     const [tasks, setTasks] = useState([])
+
     function getTasks() {
         fetch(`${apiUrl}/tasks`)
             .then((res) => res.json())
             .then((data) => setTasks(data))
             .catch((error) => console.error("Errore nel fetch:", error))
     }
+
     function addTask(task) {
         fetch(`${apiUrl}/tasks`, {
             method: "POST",
@@ -21,8 +23,17 @@ function useTasks() {
             .then(data => console.log(data))
             .catch(err => console.log(err))
     }
-    function removeTask() {
 
+    function removeTask(id) {
+        fetch(`${apiUrl}/tasks/${id}`, {
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                alert("Task Eliminata con Successo")
+            })
+            .catch(err => console.log(err))
     }
     function updateTask() {
 

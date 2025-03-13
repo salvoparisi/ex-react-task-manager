@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import GlobalContext from "../Context/GlobalContext"
 function TaskDetail() {
+    const navigate = useNavigate()
     const { id } = useParams()
     const { useTasks } = useContext(GlobalContext)
-    const { tasks, getTasks } = useTasks()
+    const { tasks, getTasks, removeTask } = useTasks()
     const [task, setTask] = useState({})
+    const [verify, setVerify] = useState(0)
 
     useEffect(() => {
         getTasks()
@@ -15,9 +17,13 @@ function TaskDetail() {
     }, [tasks])
 
     function handleDelete() {
-        console.log("Elimina");
-
+        removeTask(id)
+        navigate("/task")
     }
+    function handleVerify() {
+        setVerify(prev => prev + 1)
+    }
+
     return (
         <div>
             {task ? (
@@ -26,10 +32,15 @@ function TaskDetail() {
                     <p>Descrizione: {task.description}</p>
                     <p>Stato: {task.status}</p>
                     <p>Data creazione: {new Date(task.createdAt).toLocaleDateString()}</p>
+                    <button onClick={handleVerify}>Elimina Task</button>
+                    <div style={{ display: verify % 2 == 0 ? "none" : "block" }}>
+                        <div>Vuoi Eliminare la Task?</div>
+                        <button onClick={handleVerify} className="btn">NO</button>
+                        <button onClick={handleDelete} className="btn btn-primary">SI</button>
+                    </div>
                 </>
 
-            ) : <div>Caricamento...</div>}
-            <button onClick={handleDelete}>Elimina Task</button>
+            ) : <div>Id non trovato</div>}
         </div>
     )
 }
