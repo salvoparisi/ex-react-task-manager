@@ -31,7 +31,6 @@ function useTasks() {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                alert("Task Eliminata con Successo")
             })
             .catch(err => console.log(err))
     }

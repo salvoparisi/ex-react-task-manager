@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import GlobalContext from "../Context/GlobalContext"
+import Modal from "../Components/Modal"
 function TaskDetail() {
     const navigate = useNavigate()
     const { id } = useParams()
     const { useTasks } = useContext(GlobalContext)
     const { tasks, getTasks, removeTask } = useTasks()
     const [task, setTask] = useState({})
-    const [verify, setVerify] = useState(0)
+    const [show, setShow] = useState(false)
 
     useEffect(() => {
         getTasks()
@@ -16,13 +17,7 @@ function TaskDetail() {
         setTask(tasks.find(e => e.id == id))
     }, [tasks])
 
-    function handleDelete() {
-        removeTask(id)
-        navigate("/task")
-    }
-    function handleVerify() {
-        setVerify(prev => prev + 1)
-    }
+
 
     return (
         <div>
@@ -32,12 +27,23 @@ function TaskDetail() {
                     <p>Descrizione: {task.description}</p>
                     <p>Stato: {task.status}</p>
                     <p>Data creazione: {new Date(task.createdAt).toLocaleDateString()}</p>
-                    <button onClick={handleVerify}>Elimina Task</button>
-                    <div style={{ display: verify % 2 == 0 ? "none" : "block" }}>
-                        <div>Vuoi Eliminare la Task?</div>
-                        <button onClick={handleVerify} className="btn">NO</button>
-                        <button onClick={handleDelete} className="btn btn-primary">SI</button>
-                    </div>
+                    <button onClick={() => setShow(true)}>Elimina Task</button>
+                    <Modal
+                        title="Modale Rimozione"
+                        content="Sei sicuro di voler Eliminare questa Task?"
+                        show={show}
+                        onClose={() => setShow(false)}
+                        onConfirm={() => {
+                            try {
+                                removeTask(id)
+                                alert("Task Eliminata con Successo")
+                            } catch {
+                                alert("Errore, Task non Eliminata")
+                            } finally {
+                                navigate('/task')
+                            }
+                        }}
+                    />
                 </>
 
             ) : <div>Id non trovato</div>}
