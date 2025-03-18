@@ -34,8 +34,17 @@ function useTasks() {
             })
             .catch(err => console.log(err))
     }
-    function updateTask() {
-
+    function updateTask(newTask) {
+        fetch(`${apiUrl}/tasks/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newTask)
+        })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
     }
     return { tasks, getTasks, addTask, removeTask, updateTask }
 }
