@@ -1,10 +1,8 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
 function EditTaskModal({ show, task, onSave, onClose }) {
     const [title, setTitle] = useState(task.title)
     const [description, setDescription] = useState(task.description)
     const [status, setStatus] = useState(task.status)
-    const navigate = useNavigate()
     function onConfirm() {
         try {
             onSave(task.id, { title, description, status })
