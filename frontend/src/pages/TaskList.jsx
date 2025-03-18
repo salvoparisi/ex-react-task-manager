@@ -1,7 +1,17 @@
-import { useEffect, useContext, useState, useMemo } from "react";
+import { useEffect, useContext, useState, useMemo, useCallback } from "react";
 
 import GlobalContext from "../Context/GlobalContext";
 import TaskRow from "../Components/TaskRow";
+
+function debounce(callback, delay) {
+    let timer;
+    return (value) => {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            callback(value)
+        }, delay)
+    }
+}
 
 function TaskList() {
     const { useTasks } = useContext(GlobalContext);
@@ -13,6 +23,7 @@ function TaskList() {
     useEffect(() => {
         getTasks();
     }, []);
+
 
     function handleSort(col) {
         if (sortBy === col) {
@@ -43,9 +54,13 @@ function TaskList() {
         return sortedTask.filter(task => task.title.toLowerCase().includes(searchQuery.toLowerCase()))
     }, [searchQuery, sortedTask])
 
+    const callBackDebounce = useCallback(debounce((value) => {
+        setSearchQuery(value)
+    }, 500), [])
+
     return (
         <div>
-            <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <input type="text" onChange={(e) => callBackDebounce(e.target.value)} />
             <table border="1" width="50%">
                 <thead>
                     <tr>
