@@ -56,7 +56,7 @@ function TaskList() {
 
     const callBackDebounce = useCallback(debounce((value) => {
         setSearchQuery(value)
-    }, 500), [])
+    }, 300), [])
 
     return (
         <div>
