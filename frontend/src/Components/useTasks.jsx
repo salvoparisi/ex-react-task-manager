@@ -34,7 +34,7 @@ function useTasks() {
             })
             .catch(err => console.log(err))
     }
-    function updateTask(newTask) {
+    function updateTask(id, newTask) {
         fetch(`${apiUrl}/tasks/${id}`, {
             method: "PUT",
             headers: {
@@ -43,7 +43,10 @@ function useTasks() {
             body: JSON.stringify(newTask)
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                console.log(data)
+                getTasks()
+            })
             .catch(err => console.log(err))
     }
     return { tasks, getTasks, addTask, removeTask, updateTask }

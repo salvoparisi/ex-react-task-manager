@@ -2,13 +2,15 @@ import { useContext, useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import GlobalContext from "../Context/GlobalContext"
 import Modal from "../Components/Modal"
+import EditTaskModal from "../Components/EditTaskModal"
 function TaskDetail() {
     const navigate = useNavigate()
     const { id } = useParams()
     const { useTasks } = useContext(GlobalContext)
-    const { tasks, getTasks, removeTask } = useTasks()
+    const { tasks, getTasks, removeTask, updateTask } = useTasks()
     const [task, setTask] = useState({})
-    const [show, setShow] = useState(false)
+    const [showDelete, setShowDelete] = useState(false)
+    const [showUpdate, setShowUpdate] = useState(false)
 
     useEffect(() => {
         getTasks()
@@ -16,6 +18,7 @@ function TaskDetail() {
     useEffect(() => {
         setTask(tasks.find(e => e.id == id))
     }, [tasks])
+
 
 
 
@@ -27,12 +30,12 @@ function TaskDetail() {
                     <p>Descrizione: {task.description}</p>
                     <p>Stato: {task.status}</p>
                     <p>Data creazione: {new Date(task.createdAt).toLocaleDateString()}</p>
-                    <button onClick={() => setShow(true)}>Elimina Task</button>
+                    <button onClick={() => setShowDelete(true)}>Elimina Task</button>
                     <Modal
                         title="Modale Rimozione"
                         content="Sei sicuro di voler Eliminare questa Task?"
-                        show={show}
-                        onClose={() => setShow(false)}
+                        show={showDelete}
+                        onClose={() => setShowDelete(false)}
                         onConfirm={() => {
                             try {
                                 removeTask(id)
@@ -43,6 +46,13 @@ function TaskDetail() {
                                 navigate('/task')
                             }
                         }}
+                    />
+                    <button onClick={() => setShowUpdate(true)}>Modifica</button>
+                    <EditTaskModal
+                        show={showUpdate}
+                        onClose={() => setShowUpdate(false)}
+                        task={task}
+                        onSave={updateTask}
                     />
                 </>
 
