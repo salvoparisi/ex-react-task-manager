@@ -8,6 +8,7 @@ function TaskList() {
     const { tasks, getTasks } = useTasks()
     const [sortBy, setSortBy] = useState("createdAt")
     const [sortOrder, setSortOrder] = useState(1)
+    const [searchQuery, setSearchQuery] = useState("")
 
     useEffect(() => {
         getTasks();
@@ -38,22 +39,28 @@ function TaskList() {
         })
     }, [tasks, sortBy, sortOrder])
 
-    return (
+    const searchTask = useMemo(() => {
+        return sortedTask.filter(task => task.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    }, [searchQuery, sortedTask])
 
-        <table border="1" width="50%">
-            <thead>
-                <tr>
-                    <th onClick={() => handleSort("title")}>Nome</th>
-                    <th onClick={() => handleSort("status")}>Stato</th>
-                    <th onClick={() => handleSort("createdAt")}>Data di Creazione</th>
-                </tr>
-            </thead>
-            <tbody>
-                {sortedTask.map((task) => (
-                    <TaskRow key={task.id} {...task} />
-                ))}
-            </tbody>
-        </table>
+    return (
+        <div>
+            <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <table border="1" width="50%">
+                <thead>
+                    <tr>
+                        <th onClick={() => handleSort("title")}>Nome</th>
+                        <th onClick={() => handleSort("status")}>Stato</th>
+                        <th onClick={() => handleSort("createdAt")}>Data di Creazione</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {searchTask ? searchTask.map((task) => (
+                        <TaskRow key={task.id} {...task} />
+                    )) : <div>Caricamento...</div>}
+                </tbody>
+            </table>
+        </div>
 
     );
 }
